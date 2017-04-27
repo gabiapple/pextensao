@@ -11,7 +11,6 @@ from django.db import models
 # Unable to inspect table 'AcessoFechadura'
 # The error was: 'NoneType' object has no attribute 'groups'
 
-
 class Alarme(models.Model):
     alarmeid = models.IntegerField(primary_key=True)
     setor = models.TextField(blank=True, null=True)
@@ -19,8 +18,10 @@ class Alarme(models.Model):
     estado = models.BooleanField()
 
     class Meta:
-        managed = False
         db_table = 'Alarme'
+
+    def __str__(self):
+        return 'Alarme ' + self.alarmeid + ' Setor ' + self.setor + ' Andar ' + self.andar 
 # Unable to inspect table 'ControleLampada'
 # The error was: 'NoneType' object has no attribute 'groups'
 
@@ -31,8 +32,10 @@ class Fechadura(models.Model):
     ip = models.TextField()
 
     class Meta:
-        managed = False
         db_table = 'Fechadura'
+
+    def __str__(self):
+        return 'Fechadura ' + self.numero_serie
 # Unable to inspect table 'HistoricoAlarme'
 # The error was: 'NoneType' object has no attribute 'groups'
 # Unable to inspect table 'HistoricoFechadura'
@@ -46,19 +49,35 @@ class Lampada(models.Model):
     estado = models.BooleanField()
 
     class Meta:
-        managed = False
         db_table = 'Lampada'
+
+    def __str__(self):
+        return 'Lampadas do setor ' + self.setor + ' - andar ' + self.andar
 # Unable to inspect table 'Pessoa'
 # The error was: 'NoneType' object has no attribute 'groups'
 
 
-class Tipodocumento(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
+class Pessoa(models.Model):
+    num_documento = models.CharField(primary_key=True, max_length=11)
+    nome = models.CharField(null=False, max_length=100)
+    cargo = models.CharField(max_length=50)
+    telefone = models.CharField(max_length=20, null=False)
+    tipoDocumento = models.ForeignKey('TipoDocumento')
+    
+    def __str__(self):
+        return self.nome
+
+
+class TipoDocumento(models.Model):
+    id = models.AutoField(primary_key=True)  # AutoField?
     tipo = models.CharField(db_column='Tipo', max_length=30)  # Field name made lowercase.
 
     class Meta:
-        managed = False
         db_table = 'TipoDocumento'
+
+    def __str__(self):
+        return self.tipo
+
 # Unable to inspect table 'UsuarioApp'
 # The error was: 'NoneType' object has no attribute 'groups'
 
@@ -151,7 +170,7 @@ class DjangoAdminLog(models.Model):
 
 
 class DjangoContentType(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
+    id = models.AutoField(primary_key=True)  # AutoField?
     app_label = models.CharField(max_length=100)
     model = models.CharField(max_length=100)
 
@@ -162,7 +181,7 @@ class DjangoContentType(models.Model):
 
 
 class DjangoMigrations(models.Model):
-    id = models.IntegerField(primary_key=True)  # AutoField?
+    id = models.AutoField(primary_key=True)  # AutoField?
     app = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
     applied = models.DateTimeField()
