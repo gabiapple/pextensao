@@ -8,8 +8,17 @@
 from __future__ import unicode_literals
 
 from django.db import models
+
 # Unable to inspect table 'AcessoFechadura'
 # The error was: 'NoneType' object has no attribute 'groups'
+
+class AcessoFechadura(models.Model):
+    id_acesso = models.AutoField(primary_key=True)
+    num_documento = models.ForeignKey('Pessoa')
+    id_fechadura = models.ForeignKey('Fechadura')
+
+    def __str__(self):
+        return str(self.id_acesso) + ' - ' + str(self.num_documento) + ' - ' + str(self.id_fechadura)
 
 class Alarme(models.Model):
     alarmeid = models.IntegerField(primary_key=True)
@@ -44,8 +53,7 @@ class Fechadura(models.Model):
 
     def __str__(self):
         return 'Fechadura ' + self.numero_serie
-# Unable to inspect table 'HistoricoAlarme'
-# The error was: 'NoneType' object has no attribute 'groups'
+
 
 class HistoricoAlarme(models.Model):
     data = models.DateTimeField(primary_key=True)
@@ -58,6 +66,10 @@ class HistoricoAlarme(models.Model):
 # Unable to inspect table 'HistoricoFechadura'
 # The error was: 'NoneType' object has no attribute 'groups'
 
+#class HistoricoFechadura(models.Model):
+ #   id_acesso = models.AutoField(primary_key=True)
+  #  id_fechadura = models.ForeignKey('Fechadura')
+   # Timestamp = models.DateTimeField(null=False)
 
 class Lampada(models.Model):
     lampadaid = models.IntegerField(primary_key=True)
