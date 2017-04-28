@@ -22,8 +22,16 @@ class Alarme(models.Model):
 
     def __str__(self):
         return 'Alarme ' + self.alarmeid + ' Setor ' + self.setor + ' Andar ' + self.andar 
+
 # Unable to inspect table 'ControleLampada'
 # The error was: 'NoneType' object has no attribute 'groups'
+
+# class ControleLampada(models.Model):
+#     id = models.AutoField(primary_key=True)
+#     id_lampada = models.ForeignKey('Lampada')
+#     data = models.DateTimeField(null=False, blank=False)
+#     id_usuario = models.ForeignKey('UsuarioApp')    
+
 
 
 class Fechadura(models.Model):
@@ -53,8 +61,6 @@ class Lampada(models.Model):
 
     def __str__(self):
         return 'Lampadas do setor ' + self.setor + ' - andar ' + self.andar
-# Unable to inspect table 'Pessoa'
-# The error was: 'NoneType' object has no attribute 'groups'
 
 
 class Pessoa(models.Model):
@@ -65,11 +71,11 @@ class Pessoa(models.Model):
     tipoDocumento = models.ForeignKey('TipoDocumento')
     
     def __str__(self):
-        return self.nome
+        return self.num_documento + ' - ' + self.nome
 
 
 class TipoDocumento(models.Model):
-    id = models.AutoField(primary_key=True)  # AutoField?
+    id = models.AutoField(primary_key=True)  
     tipo = models.CharField(db_column='Tipo', max_length=30)  # Field name made lowercase.
 
     class Meta:
@@ -81,6 +87,16 @@ class TipoDocumento(models.Model):
 # Unable to inspect table 'UsuarioApp'
 # The error was: 'NoneType' object has no attribute 'groups'
 
+class UsuarioApp(models.Model):
+    num_documento = models.ForeignKey('Pessoa')
+    nome = models.CharField(unique=True, max_length=30)
+    senha = models.CharField(max_length=128)
+
+    class Meta:
+        db_table ='UsuarioApp'
+
+    def __str__(self):
+        return self.nome
 
 class AuthGroup(models.Model):
     id = models.IntegerField(primary_key=True)  # AutoField?
