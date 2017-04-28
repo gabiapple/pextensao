@@ -23,15 +23,15 @@ class Alarme(models.Model):
     def __str__(self):
         return 'Alarme ' + self.alarmeid + ' Setor ' + self.setor + ' Andar ' + self.andar 
 
-# Unable to inspect table 'ControleLampada'
-# The error was: 'NoneType' object has no attribute 'groups'
 
-# class ControleLampada(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     id_lampada = models.ForeignKey('Lampada')
-#     data = models.DateTimeField(null=False, blank=False)
-#     id_usuario = models.ForeignKey('UsuarioApp')    
+class ControleLampada(models.Model):
+    id = models.AutoField(primary_key=True)
+    id_lampada = models.ForeignKey('Lampada')
+    data = models.DateTimeField(null=False, blank=False)
+    id_usuario = models.ForeignKey('UsuarioApp') 
 
+    def __str__(self):
+        return str(self.id_usuario) + ' - ' + str(self.id_lampada) + ' em ' + str(self.data)
 
 
 class Fechadura(models.Model):
@@ -60,7 +60,7 @@ class Lampada(models.Model):
         db_table = 'Lampada'
 
     def __str__(self):
-        return 'Lampadas do setor ' + self.setor + ' - andar ' + self.andar
+        return 'Lampadas do setor ' + str(self.setor) + ' - andar ' + self.andar
 
 
 class Pessoa(models.Model):
@@ -84,8 +84,6 @@ class TipoDocumento(models.Model):
     def __str__(self):
         return self.tipo
 
-# Unable to inspect table 'UsuarioApp'
-# The error was: 'NoneType' object has no attribute 'groups'
 
 class UsuarioApp(models.Model):
     num_documento = models.ForeignKey('Pessoa')
