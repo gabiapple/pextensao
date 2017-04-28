@@ -21,7 +21,7 @@ class Alarme(models.Model):
         db_table = 'Alarme'
 
     def __str__(self):
-        return 'Alarme ' + self.alarmeid + ' Setor ' + self.setor + ' Andar ' + self.andar 
+        return 'Alarme ' + str(self.alarmeid) + ' Setor ' + self.setor + ' Andar ' + self.andar 
 
 
 class ControleLampada(models.Model):
@@ -46,6 +46,15 @@ class Fechadura(models.Model):
         return 'Fechadura ' + self.numero_serie
 # Unable to inspect table 'HistoricoAlarme'
 # The error was: 'NoneType' object has no attribute 'groups'
+
+class HistoricoAlarme(models.Model):
+    data = models.DateTimeField(primary_key=True)
+    id_alarme = models.ForeignKey('Alarme')
+
+    def __str__(self):
+        return str(self.id_alarme) + ' - ' + str(self.data)
+
+
 # Unable to inspect table 'HistoricoFechadura'
 # The error was: 'NoneType' object has no attribute 'groups'
 
